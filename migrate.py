@@ -87,7 +87,7 @@ def copy_maven_project(src_path: str, dst_base_path: str, source_java_path: str)
     shutil.rmtree(dst_path + "/pom.xml", ignore_errors=True)
 
     for root, dirs, files in os.walk(src_path, topdown=True):
-        for dd in ["target", ".mvn"]:
+        for dd in ["target", ".mvn", ".scannerwork"]:
             if dd in dirs:
                 dirs.remove(dd)
 
