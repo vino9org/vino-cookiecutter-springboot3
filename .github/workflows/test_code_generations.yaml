@@ -32,7 +32,6 @@ jobs:
         pip install -r requirements-dev.txt
 
     - name: Linting
-      if: success()
       run: |
         flake8 --count --show-source --statistics
 
