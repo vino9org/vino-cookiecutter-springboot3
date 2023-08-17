@@ -1,0 +1,13 @@
+resources:
+- ../../base
+
+namespace: default
+
+secretGenerator:
+  - name: env-creds
+    envs:
+      - everyone_knows.env
+
+images:
+  - name: ghcr.io/vino9org/vino-java-base/{{cookiecutter.project_slug}}
+    newName: sloppycoder/{{cookiecutter.project_slug}}

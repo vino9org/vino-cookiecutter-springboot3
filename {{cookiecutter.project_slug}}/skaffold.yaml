@@ -1,0 +1,16 @@
+apiVersion: skaffold/v4beta5
+kind: Config
+metadata:
+  name: {{cookiecutter.project_slug}}
+
+build:
+  artifacts:
+  - image: sloppycoder/{{cookiecutter.project_slug}}
+    jib:
+      args:
+      - -DskipTests
+
+manifests:
+  kustomize:
+    paths:
+    - k8s/envs/dev

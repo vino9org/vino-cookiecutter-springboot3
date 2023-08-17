@@ -1,0 +1,15 @@
+type Query {
+    CasaAccount(accountId: String!): CasaAccount
+}
+
+type CasaAccount {
+    customerId: String!
+    accountId: String!
+    currency: String!
+    balance: BigDecimal!
+}
+
+scalar Date
+scalar BigDecimal
+
+# DELETE_IF: cookiecutter.api_type != 'graphql'

@@ -1,0 +1,15 @@
+resources:
+- external-secret.yaml
+- ../../base
+
+namespace: prod
+
+# apply patch to all deployments that matches the label
+patches:
+  - patch: |-
+      - op: replace
+        path: "/spec/template/spec/containers/0/resources/limits/cpu"
+        value: "2000m"
+    target:
+      kind: Deployment
+      labelSelector: app={{cookiecutter.project_slug}}

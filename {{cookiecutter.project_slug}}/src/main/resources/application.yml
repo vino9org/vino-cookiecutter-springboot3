@@ -1,0 +1,112 @@
+server:
+  port: 8080
+
+spring:
+  main:
+    banner-mode: off
+  {% if cookiecutter.database_type != 'none' or cookiecutter.cache_type != 'none' -%}
+  data:
+    {% if cookiecutter.database_type == 'mongodb' -%}
+    mongodb:
+      uri: "mongodb://localhost/appdb"
+    {% endif -%}
+    {% if cookiecutter.cache_type == 'redis' -%}
+    redis:
+      url: redis://redis:6379
+      repositories:
+        enabled: false
+    {% endif %}
+  {% if cookiecutter.database_type == 'postgresql' or cookiecutter.database_type == 'mysql' -%}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        {% if cookiecutter.database_type == 'postgresql' -%}
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        {%- else -%}
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        {%- endif %}
+    show-sql: true
+  # please update the database url and dialect manually
+  datasource:
+    {% if cookiecutter.database_type == 'postgresql' -%}
+    url: jdbc:postgresql://localhost:5432/appdb
+    {%- else -%}
+    url: jdbc:jdbc:mysql://localhost:3306/appdb
+    {%- endif %}
+    username: username
+    password: password
+  flyway:
+    enabled: true
+  {% endif %}
+  {% endif %}
+
+{% if cookiecutter.api_type == 'graphql' -%}
+dgs:
+  graphql:
+    introspection:
+      enabled: true
+    graphiql:
+      enabled: true
+    extensions:
+      scalars:
+        time-dates.enabled: true
+        numbers.enabled: true
+{% endif -%}
+
+info:
+  app:
+    name: {{cookiecutter.project_slug}}
+    author: "@teamvino"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health
+  info:
+    git:
+      enabled: true
+      mode: simple
+    java:
+      enabled: true
+    env:
+      enabled: true
+
+  endpoint:
+    health:
+      show-components: always
+      probes:
+        enabled: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  {% if cookiecutter.database_type == 'postgresql' or cookiecutter.database_type == 'mysql' -%}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    show-sql: true
+  datasource:
+    url: jdbc:h2:mem:test.db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+  flyway:
+    enabled: true
+  {% endif %}
+
+{% if cookiecutter.database_type == 'mongodb' -%}
+de.flapdoodle.mongodb.embedded:
+  version: "6.0.5"
+{% endif -%}
+
+logging:
+  level:
+    org.springframework.jdbc.datasource.init.ScriptUtils: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework.jdbc.datasource: DEBUG

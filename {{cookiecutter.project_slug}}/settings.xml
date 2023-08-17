@@ -1,0 +1,32 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <servers>
+        <server>
+            <id>vino</id>
+            <username>${env.GITHUB_USER}</username>
+            <password>${env.GITHUB_TOKEN}</password>
+        </server>
+    </servers>
+    <activeProfiles>
+        <activeProfile>vino-base-pom</activeProfile>
+    </activeProfiles>
+    <profiles>
+        <profile>
+            <id>vino-base-pom</id>
+            <repositories>
+                <repository>
+                    <id>vino</id>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                    <url>https://maven.pkg.github.com/vino9org/vino-java-base</url>
+                    <layout>default</layout>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
+</settings>

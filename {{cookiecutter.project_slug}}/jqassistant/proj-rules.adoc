@@ -1,0 +1,27 @@
+= My Project
+
+The rules here are simple place holders. This file should be customized and standardized for each project and application.
+
+// Include a summary of all executed rules and their status
+include::jQA:Summary[]
+
+[[default]]
+[role=group,includesConstraints="proj-rules:*"]
+== Default Rules
+
+[[proj-rules:TestClassName]]
+[source,cypher,role=constraint,requiresConcepts="junit4:TestClass"]
+----
+MATCH
+    (t:Junit4:Test:Class)
+WHERE NOT
+    t.name ends with "Test"
+RETURN
+    t AS InvalidTestClass
+----
+
+== Imported Rules
+
+// Include specific rules that have been executed and their results.
+include::jQA:Rules[concepts="junit*:*"]
+include::jQA:Rules[concepts="junit*:*"]

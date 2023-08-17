@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{cookiecutter.project_slug}}
+  labels:
+    app: {{cookiecutter.project_slug}}
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: {{cookiecutter.project_slug}}
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: {{cookiecutter.project_slug}}
+        version: v1
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: {{cookiecutter.project_slug}}
+        image: ghcr.io/vino9org/vino-java-base/{{cookiecutter.project_slug}}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+        {% if cookiecutter.database_type == 'mongodb' -%}
+        - name: SPRING_DATA_MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: env-creds
+              key: mongodb_url
+        - name: SPRING_DATA_MONGODB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: env-creds
+              key: mongodb_username
+        - name: SPRING_DATA_MONGODB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: env-creds
+              key: mongodb_password
+        {% endif -%}
+        {% if cookiecutter.database_type == 'postgresql' or cookiecutter.database_type == 'mysql' -%}
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            secretKeyRef:
+              name: env-creds
+              key: database_url
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: env-creds
+              key: database_username
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: env-creds
+              key: database_password
+        {% endif -%}
+        - name: LOGGING_LEVEL_ROOT
+          value: "WARN"
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 500m
+            memory: 128Mi
+          limits:
+            cpu: 1000m
+            memory: 512Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{cookiecutter.project_slug}}
+  labels:
+    app: {{cookiecutter.project_slug}}
+    service: {{cookiecutter.project_slug}}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{cookiecutter.project_slug}}
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080

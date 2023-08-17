@@ -1,0 +1,56 @@
+{
+  "project_name": "dummy-svc",
+  "project_slug": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
+  "pkg_name": "net.vino9.vino.svc.{{ cookiecutter.project_slug|replace('-', '_') }}",
+  "pkg_path": "{{ cookiecutter.pkg_name|replace('.', '/') }}",
+  "maven_group_id": "net.vino9.vino.svc",
+  "maven_artifact_id": "{{ cookiecutter.project_slug }}",
+  "project_short_description": "Generic Springboot 3 microservice based on Vino base POM",
+  "version": "1.0.0-SNAPSHOT",
+  "api_type": [
+    "graphql",
+    "rest"
+  ],
+  "database_type": [
+    "mongodb",
+    "postgresql",
+    "mysql",
+    "none"
+  ],
+  "cache_type": [
+    "redis",
+    "none"
+  ],
+  "gen_k8s_yaml": [
+    "yes",
+    "no"
+  ],
+  "use_github_action": [
+    "yes",
+    "no"
+  ],
+  "qa_tools": [
+    [
+      "spotless",
+      "archunit",
+      "jqassistant"
+    ],
+    [
+      "spotless",
+      "archunit"
+    ],
+    [
+      "spotless"
+    ]
+  ],
+  "_copy_without_render": [
+    "mvnw",
+    "mvnw.cmd",
+    ".mvn/jvm.config",
+    ".mvn/wrapper/MavenWrapperDownloader.java",
+    ".mvn/wrapper/maven-wrapper.properties",
+    ".mvn/wrapper/maven-wrapper.jar",
+    ".github/workflows/jib_build.yaml"
+  ],
+  "_comments__": "reactive web is currently not supported. requires a new maven project template to work"
+}

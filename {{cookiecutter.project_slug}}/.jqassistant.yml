@@ -1,0 +1,33 @@
+# check document for more details:
+# https://jqassistant.github.io/jqassistant/doc/1.12.2/manual/#core:Configuration
+#
+# this file is a place holder with only basic scan setting for using a local database
+# and a proper project specific configuration and rules should be used
+
+jqassistant:
+  skip: false
+
+maven:
+  # Force the module where 'mvn' is being executed to be used as root module. The database will be created in this module and contain all information of the reactor. Rules will be read from the rules folder of this module.
+  #
+  # jqassistant.maven.use-execution-root-as-project-root: true|false
+  use-execution-root-as-project-root: false
+
+#  scan result by default goes to a local embedded neo4j instance, which is good for local inspection
+#  to centralized analysis, uncomment the following to send scan results to a remote database
+#  store:
+#    uri: bolt://localhost
+#    remote:
+#      username: neo4j
+#      password: password
+
+
+  scan:
+    reset: true
+    continue-on-error: false
+
+  analyze:
+    rule:
+      directory: jqassistant/
+      default-concept-severity: MINOR
+      default-constraint-severity: MAJOR
