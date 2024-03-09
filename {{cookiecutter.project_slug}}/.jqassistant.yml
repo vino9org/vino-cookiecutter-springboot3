@@ -20,8 +20,8 @@ jqassistant:
     continue-on-error: false
 
   analyze:
-    group:
-      - SprintBoot-Default
+    groups:
+      - spring-boot:Default
     rule:
       directory: jqassistant/
       default-concept-severity: MINOR
