@@ -38,13 +38,7 @@ Before running the jqassistant plugin, make sure to update the following files t
 ```
 
 ## archunit
-Archunit test rules are configured in parent pom and are automated executed during test execution. 
+Archunit test rules are configured in parent pom and are automated executed during test execution.
 
 
 ## Known issues
-1. unit test fails due to ```libcrypto.so.1.1``` cannot be loaded when running on Ubuntu 22.04. The workaround has been added as a Maven profile ```ubuntu22``` in ```vino-demo-svc/pom.xml```. Activating it when override the OS detection so that correct Mongo binary is downloaded. 
-```bash
-
-   ./mvnw clean install -Pubuntu22
-
-```

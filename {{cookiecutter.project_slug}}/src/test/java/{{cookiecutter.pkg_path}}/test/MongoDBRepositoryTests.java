@@ -1,4 +1,4 @@
-package {{cookiecutter.pkg_name}};
+package {{cookiecutter.pkg_name}}.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -4,48 +4,29 @@
     <parent>
         <groupId>net.vino9.vino</groupId>
         <artifactId>vino-svc-parent</artifactId>
-        <version>1.0.6</version>
+        <version>1.1.0</version>
         <relativePath />
     </parent>
 
-    <!-- do not remove groupId -->
     <groupId>{{cookiecutter.maven_group_id}}</groupId>
     <artifactId>{{cookiecutter.maven_artifact_id}}</artifactId>
-    <version>{{cookiecutter.version}}</version>
     <name>{{cookiecutter.project_slug}}</name>
     <description>{{cookiecutter.project_short_description}}</description>
+    <version>{{cookiecutter.version}}</version>
 
     <properties>
-        <java.version>17</java.version>
         <graphql.codegen.package>{{cookiecutter.pkg_name ~ '.generated'}}</graphql.codegen.package>
         <!-- uncomment below to override default coverage ratio, 1.0 == 100% -->
         <jacoco.minimum.line.coverage>0.7</jacoco.minimum.line.coverage>
     </properties>
 
     <dependencies>
-        <!--standard dependencies-->
-        <dependency>
-            <groupId>net.vino9.vino</groupId>
-            <artifactId>vino-baselib</artifactId>
-            <version>1.0.6</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.modelmapper.extensions</groupId>
-            <artifactId>modelmapper-spring</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- end of standard dependencies -->
 
-
-        {% if cookiecutter.cache_type == 'redis' -%} 
+        {% if cookiecutter.cache_type == 'redis' -%}
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -54,16 +35,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
-        {%- endif -%} 
+        {%- endif -%}
 
-        {%- if cookiecutter.database_type == 'mongodb' -%} 
+        {%- if cookiecutter.database_type == 'mongodb' -%}
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
-        {%- endif -%} 
+        {%- endif -%}
 
-        {%- if cookiecutter.database_type == 'postgresql' or cookiecutter.database_type == 'mysql'  -%} 
+        {%- if cookiecutter.database_type == 'postgresql' or cookiecutter.database_type == 'mysql'  -%}
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -76,24 +57,24 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
-        {%- endif -%} 
+        {%- endif -%}
 
-        {%- if cookiecutter.database_type == 'mysql' -%} 
+        {%- if cookiecutter.database_type == 'mysql' -%}
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <scope>runtime</scope>
         </dependency>
-        {%- endif -%} 
-        {%- if cookiecutter.database_type == 'postgresql' -%} 
+        {%- endif -%}
+        {%- if cookiecutter.database_type == 'postgresql' -%}
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
-        {%- endif -%} 
+        {%- endif -%}
 
-        {%- if cookiecutter.api_type == 'graphql' -%} 
+        {%- if cookiecutter.api_type == 'graphql' -%}
         <dependency>
             <groupId>com.netflix.graphql.dgs</groupId>
             <artifactId>graphql-dgs-spring-boot-starter</artifactId>
@@ -106,30 +87,30 @@
             <groupId>com.netflix.graphql.dgs</groupId>
             <artifactId>graphql-dgs-pagination</artifactId>
         </dependency>
-        {%- endif -%} 
+        {%- endif -%}
 
-        {%- if cookiecutter.database_type == 'mongodb' -%} 
+        {%- if cookiecutter.database_type == 'mongodb' -%}
         <dependency>
             <groupId>de.flapdoodle.embed</groupId>
-            <artifactId>de.flapdoodle.embed.mongo.spring30x</artifactId>
+            <artifactId>de.flapdoodle.embed.mongo.spring3x</artifactId>
             <scope>test</scope>
         </dependency>
-        {%- endif -%} 
-        {%- if cookiecutter.cache_type == 'redis' -%} 
+        {%- endif -%}
+        {%- if cookiecutter.cache_type == 'redis' -%}
         <dependency>
             <groupId>com.github.fppt</groupId>
             <artifactId>jedis-mock</artifactId>
             <scope>test</scope>
         </dependency>
-        {%- endif -%} 
+        {%- endif -%}
 
-        {% if cookiecutter.database_type == 'postgresql' or cookiecutter.database_type == 'mysql' -%} 
+        {% if cookiecutter.database_type == 'postgresql' or cookiecutter.database_type == 'mysql' -%}
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
-        {%- endif -%} 
+        {%- endif -%}
     </dependencies>
 
     <build>
@@ -141,74 +122,26 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
-            <!-- most of the plugin configurations are inherited from the parent pom -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>io.github.git-commit-id</groupId>
-                <artifactId>git-commit-id-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-            </plugin>
-            {%- if cookiecutter.api_type == 'graphql' -%} 
+            {%- if cookiecutter.api_type == 'graphql' -%}
             <plugin>
                 <groupId>io.github.deweyjose</groupId>
                 <artifactId>graphqlcodegen-maven-plugin</artifactId>
             </plugin>
-            {%- endif -%} 
-            {%- if 'archunit' in cookiecutter.qa_tools -%} 
+            {%- endif -%}
+            {%- if 'archunit' in cookiecutter.qa_tools -%}
             <plugin>
                 <groupId>com.societegenerale.commons</groupId>
                 <artifactId>arch-unit-maven-plugin</artifactId>
             </plugin>
-            {%- endif -%} 
+            {%- endif -%}
+            {%- if 'jqassistant' in cookiecutter.qa_tools -%}
+            <!-- disable temporarily to speed up test run
             <plugin>
-                <groupId>com.diffplug.spotless</groupId>
-                <artifactId>spotless-maven-plugin</artifactId>
+                <groupId>com.buschmais.jqassistant</groupId>
+                <artifactId>jqassistant-maven-plugin</artifactId>
             </plugin>
+            -->
+            {%- endif -%}
         </plugins>
     </build>
-    <profiles>
-        {%- if 'jqassistant' in cookiecutter.qa_tools -%} 
-        <profile>
-            <id>jqa</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.buschmais.jqassistant</groupId>
-                        <artifactId>jqassistant-maven-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        {%- endif -%} 
-        <profile>
-            <id>ubuntu22</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <systemPropertyVariables>
-                                <de.flapdoodle.os.override>Linux|X86_64|Ubuntu|Ubuntu_22_04</de.flapdoodle.os.override>
-                            </systemPropertyVariables>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>

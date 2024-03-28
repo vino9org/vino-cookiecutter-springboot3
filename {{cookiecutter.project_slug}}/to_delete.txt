@@ -1,18 +1,18 @@
 {% if 'jqassistant' not in cookiecutter.qa_tools %} jqassistant/proj-rules.adoc {% endif %}
 {% if cookiecutter.api_type != 'graphql' %} src/main/java/{{cookiecutter.pkg_path}}/api/dgs/CasaAccountDataFetcher.java  {% endif %}
-{% if cookiecutter.api_type != 'graphql' %} src/test/java/{{cookiecutter.pkg_path}}/GraphQLQueryTests.java  {% endif %}
+{% if cookiecutter.api_type != 'graphql' %} src/test/java/{{cookiecutter.pkg_path}}/test/GraphQLQueryTests.java  {% endif %}
 {% if cookiecutter.cache_type != 'redis' %} src/main/java/{{cookiecutter.pkg_path}}/api/rest/SlowController.java  {% endif %}
 {% if cookiecutter.cache_type != 'redis' %} src/main/java/{{cookiecutter.pkg_path}}/api/rest/SlowService.java  {% endif %}
-{% if cookiecutter.cache_type != 'redis' %} src/test/java/{{cookiecutter.pkg_path}}/CachedServiceTests.java  {% endif %}
 {% if cookiecutter.cache_type != 'redis' %} src/test/java/{{cookiecutter.pkg_path}}/JRedisMockConfiguration.java  {% endif %}
+{% if cookiecutter.cache_type != 'redis' %} src/test/java/{{cookiecutter.pkg_path}}/test/CachedServiceTests.java  {% endif %}
 {% if cookiecutter.database_type != 'mongodb' %} src/main/java/{{cookiecutter.pkg_path}}/data/model/CasaAccount.java  {% endif %}
 {% if cookiecutter.database_type != 'mongodb' %} src/main/java/{{cookiecutter.pkg_path}}/data/repository/CasaAccountRepository.java  {% endif %}
-{% if cookiecutter.database_type != 'mongodb' %} src/test/java/{{cookiecutter.pkg_path}}/MongoDBRepositoryTests.java  {% endif %}
 {% if cookiecutter.database_type != 'mongodb' %} src/test/java/{{cookiecutter.pkg_path}}/MongoDBSeeder.java  {% endif %}
+{% if cookiecutter.database_type != 'mongodb' %} src/test/java/{{cookiecutter.pkg_path}}/test/MongoDBRepositoryTests.java  {% endif %}
 {% if cookiecutter.database_type != 'postgresql' and cookiecutter.database_type != 'mysql' %} src/main/java/{{cookiecutter.pkg_path}}/data/model/Customer.java  {% endif %}
 {% if cookiecutter.database_type != 'postgresql' and cookiecutter.database_type != 'mysql' %} src/main/java/{{cookiecutter.pkg_path}}/data/repository/CustomerRepository.java  {% endif %}
 {% if cookiecutter.database_type != 'postgresql' and cookiecutter.database_type != 'mysql' %} src/main/resources/db/migration/V1__create_table.sql  {% endif %}
-{% if cookiecutter.database_type != 'postgresql' and cookiecutter.database_type != 'mysql' %} src/test/java/{{cookiecutter.pkg_path}}/JpaRepositoryTests.java  {% endif %}
+{% if cookiecutter.database_type != 'postgresql' and cookiecutter.database_type != 'mysql' %} src/test/java/{{cookiecutter.pkg_path}}/test/JpaRepositoryTests.java  {% endif %}
 {% if cookiecutter.gen_k8s_yaml != 'yes' %} k8s/base/kustomization.yaml  {% endif %}
 {% if cookiecutter.gen_k8s_yaml != 'yes' %} k8s/base/vino-demo-svc.yaml  {% endif %}
 {% if cookiecutter.gen_k8s_yaml != 'yes' %} k8s/envs/dev/everyone_knows.env  {% endif %}

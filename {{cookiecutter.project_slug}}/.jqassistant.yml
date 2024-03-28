@@ -7,26 +7,21 @@
 jqassistant:
   skip: false
 
-maven:
-  # Force the module where 'mvn' is being executed to be used as root module. The database will be created in this module and contain all information of the reactor. Rules will be read from the rules folder of this module.
-  #
-  # jqassistant.maven.use-execution-root-as-project-root: true|false
-  use-execution-root-as-project-root: false
-
 #  scan result by default goes to a local embedded neo4j instance, which is good for local inspection
 #  to centralized analysis, uncomment the following to send scan results to a remote database
 #  store:
-#    uri: bolt://localhost
+#    uri: neo4j://localhost
 #    remote:
 #      username: neo4j
 #      password: password
 
-
   scan:
-    reset: true
+    reset: false
     continue-on-error: false
 
   analyze:
+    groups:
+      - spring-boot:Default
     rule:
       directory: jqassistant/
       default-concept-severity: MINOR
