@@ -35,11 +35,12 @@ comment_regex = {
 }
 
 
+# pyright: ignore
 class CommentedTreeBuilder(et.TreeBuilder):
-    def comment(self, data):
+    def comment(self, data):  # pyright: ignore
         self.start(et.Comment, {})
         self.data(data)
-        self.end(et.Comment)
+        self.end(et.Comment)  # pyright: ignore
 
 
 def replace_pomxml_tag(root, tag_path, new_value) -> None:
@@ -59,22 +60,21 @@ def ensure_dir_exists(path: str) -> str:
     return path
 
 
-def detect_java_pkg(base_path: str) -> str:
+def detect_java_pkg(base_path: str) -> tuple[str, str]:
     """
     detect the top level java package of a java project
     the first directory
     """
     java_module_name = os.path.basename(base_path)
     java_src_path = base_path + "/src/main/java"
-    if not os.path.exists(java_src_path):
-        return None
-
-    for root, dirs, files in os.walk(java_src_path, topdown=True):
-        # print("root=", root, "dirs=", dirs)
-        if len(dirs) > 1:
-            pkg = os.path.relpath(root, java_src_path).replace("/", ".")
-            print(f"= detected java pacakage for module {java_module_name} is {pkg}")
-            return java_module_name, pkg
+    if os.path.exists(java_src_path):
+        for root, dirs, files in os.walk(java_src_path, topdown=True):
+            # print("root=", root, "dirs=", dirs)
+            if len(dirs) > 1:
+                pkg = os.path.relpath(root, java_src_path).replace("/", ".")
+                print(f"= detected java pacakage for module {java_module_name} is {pkg}")
+                return java_module_name, pkg
+    return "", ""
 
 
 def copy_maven_project(src_path: str, dst_base_path: str, source_java_path: str) -> str:

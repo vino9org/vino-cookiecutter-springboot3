@@ -6,16 +6,14 @@ import shlex
 import subprocess
 import traceback
 
-import distro
-from ruamel.yaml import YAML, YAMLError
+import yaml
 
 
 def is_valid_yaml_file(yaml_file_path):
     try:
         with open(yaml_file_path, "r") as file:
-            parser = YAML(typ="safe")
-            return parser.load_all(file)
-    except YAMLError as exc:
+            return yaml.safe_load_all(file)
+    except yaml.YAMLError as exc:
         traceback.print_exception(exc)
         return None
 
