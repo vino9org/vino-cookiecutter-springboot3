@@ -45,7 +45,7 @@ jobs:
           git config --global init.defaultBranch main
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "bot@github.com"
-          pytest -v
+          uv run pytest -v
         env:
           SKIP_MAVEN_TEST: "N"
           GITHUB_USER: ${{ github.actor }}
