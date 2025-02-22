@@ -1,7 +1,5 @@
 # Cookiecutter template for Spring Boot microservice
 
-[![Built with Devbox](https://jetpack.io/img/devbox/shield_galaxy.svg)](https://jetpack.io/devbox/docs/contributor-quickstart/)
-
 To use the template, please install cookiecutter on your computer by following [instructions here](https://cookiecutter.readthedocs.io/en/latest/installation.html)
 
 ```shell

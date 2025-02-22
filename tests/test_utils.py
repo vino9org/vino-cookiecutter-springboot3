@@ -19,6 +19,8 @@ def test_generate_and_build_one_project(cookies):
             "qa_tools": ["spotless", "archunit", "jqassistant"],
         }
     )
+    print(result)
+    print(result.exception)
     assert verify_generated_project(result) == "my-test-service"
     assert os.path.exists(result.project_path / "k8s/base/kustomization.yaml")
     assert os.path.exists(result.project_path / ".github/workflows/jib_build.yaml")

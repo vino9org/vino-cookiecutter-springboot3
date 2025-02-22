@@ -1,17 +1,17 @@
 {
-    "python.formatting.provider": "black",
-    "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true,
-    "python.linting.lintOnSave": true,
-    "python.linting.ignorePatterns": [
-        ".venv/**/*.py"
-    ],
+    "python.defaultInterpreterPath": ".venv/bin/python",
     "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+        "-s"
+    ],
+    "python.envFile": "${workspaceFolder}/.env",
     "[python]": {
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-            "source.organizeImports": "explicit"
+            "source.organizeImports": "explicit",
+            "source.fixAll": "explicit"
         },
-        "editor.defaultFormatter": "ms-python.black-formatter"
-    }
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "debugpy.debugJustMyCode": false
 }

@@ -6,16 +6,14 @@ import shlex
 import subprocess
 import traceback
 
-import distro
-from ruamel.yaml import YAML, YAMLError
+import yaml
 
 
 def is_valid_yaml_file(yaml_file_path):
     try:
         with open(yaml_file_path, "r") as file:
-            parser = YAML(typ="safe")
-            return parser.load_all(file)
-    except YAMLError as exc:
+            return yaml.safe_load_all(file)
+    except yaml.YAMLError as exc:
         traceback.print_exception(exc)
         return None
 
@@ -73,24 +71,10 @@ def run_build_in_generated_project(project_path):
 
         mvn = mvn_cmd()
 
-        # as of 2023-08-16, the mongo binary for Debian 12 is not available
-        # also, embed.mongo version detection does not work correctly on
-        # PopOS 22.04 so we enable a maven profile to deal with these situations
-        #
-        # -Pubuntu22 is a maven profile that overrides OS detection and force use
-        # of mongo binary for Ubuntu 22.04
-        distro_id, distro_version = distro.id(), distro.version()
-        if distro_id in ["ubuntu", "pop", "mint"] and distro_version > "22.0":
-            extra_opts = "-Pubuntu22"
-        elif distro_id in ["debian"] and distro_version > "11.0":
-            extra_opts = "-Pubuntu22"
-        else:
-            extra_opts = ""
-
         if (
             subprocess.call(shlex.split(f"{mvn} dependency:resolve")) == 0
             and subprocess.call(shlex.split(f"{mvn} dependency:resolve-plugins")) == 0
-            and subprocess.call(shlex.split(f"{mvn} clean test {extra_opts}")) == 0
+            and subprocess.call(shlex.split(f"{mvn} clean test")) == 0
         ):
             os.chdir(prev_cwd)
             return True
