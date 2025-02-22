@@ -1,7 +1,6 @@
 package {{cookiecutter.pkg_name}}.data.repository;
 
 import java.util.List;
-
 import {{cookiecutter.pkg_name}}.data.model.CasaAccount;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

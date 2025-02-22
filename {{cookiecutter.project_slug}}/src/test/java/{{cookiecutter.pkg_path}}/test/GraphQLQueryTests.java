@@ -1,4 +1,4 @@
-package {{cookiecutter.pkg_name}};
+package {{cookiecutter.pkg_name}}.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

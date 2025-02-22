@@ -1,35 +1,38 @@
-package {{cookiecutter.pkg_name}};
+package {{cookiecutter.pkg_name}}.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import {{cookiecutter.pkg_name}}.JRedisMockConfiguration;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
+@AutoConfigureMockMvc
 {% if cookiecutter.cache_type != 'none' -%}
 @Import(JRedisMockConfiguration.class)
 {%- endif %}
 class CachedServiceTests {
 
-    @LocalServerPort int port;
+    @Autowired MockMvc mockMvc;
 
     @Test
-    void testCacheableWorks() {
+    void testCacheableWorks() throws Exception {
         var template = new RestTemplate();
         var ts0 = System.currentTimeMillis();
 
-        var svcUrl = "http://localhost:" + port + "/rest/slow";
-
-        assertTrue(template.getForEntity(svcUrl, String.class).getStatusCode().is2xxSuccessful());
+        mockMvc.perform(get("/rest/slow")).andExpect(status().is2xxSuccessful());
         var ts1 = System.currentTimeMillis();
 
-        assertTrue(template.getForEntity(svcUrl, String.class).getStatusCode().is2xxSuccessful());
+        mockMvc.perform(get("/rest/slow")).andExpect(status().is2xxSuccessful());
         var ts2 = System.currentTimeMillis();
 
         // invoke api for the 1st time, should be slow

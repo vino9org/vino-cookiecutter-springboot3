@@ -1,5 +1,6 @@
 package {{cookiecutter.pkg_name}};
 
+// spotless:off
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 {% if cookiecutter.cache_type != 'none' -%}
@@ -10,8 +11,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 {% endif -%}
 {% if cookiecutter.database_type == 'mongodb' -%}
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-
 {% endif -%}
+// spotless:on
 
 @SpringBootApplication
 {% if cookiecutter.database_type == 'mongodb' -%}

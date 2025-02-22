@@ -4,46 +4,31 @@
     <parent>
         <groupId>net.vino9.vino</groupId>
         <artifactId>vino-svc-parent</artifactId>
-        <version>1.0.7-SNAPSHOT</version>
+        <version>1.1.1-SNAPSHOT</version>
         <relativePath />
     </parent>
 
-    <!-- do not remove groupId -->
+    <!--
+        do not delete (redudant) groupId and version below.
+        doing so may throw off the template import in cookiecutter
+    -->
     <groupId>{{cookiecutter.maven_group_id}}</groupId>
     <artifactId>{{cookiecutter.maven_artifact_id}}</artifactId>
-    <version>{{cookiecutter.version}}</version>
     <name>{{cookiecutter.project_slug}}</name>
     <description>{{cookiecutter.project_short_description}}</description>
+    <version>{{cookiecutter.version}}</version>
 
     <properties>
-        <java.version>17</java.version>
         <graphql.codegen.package>{{cookiecutter.pkg_name ~ '.generated'}}</graphql.codegen.package>
         <!-- uncomment below to override default coverage ratio, 1.0 == 100% -->
         <jacoco.minimum.line.coverage>0.7</jacoco.minimum.line.coverage>
     </properties>
 
     <dependencies>
-        <!--standard dependencies-->
-        <dependency>
-            <groupId>net.vino9.vino</groupId>
-            <artifactId>vino-baselib</artifactId>
-            <version>1.0.7-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.modelmapper.extensions</groupId>
-            <artifactId>modelmapper-spring</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- end of standard dependencies -->
-
 
         {% if cookiecutter.cache_type == 'redis' -%} 
         <dependency>
@@ -111,7 +96,7 @@
         {%- if cookiecutter.database_type == 'mongodb' -%} 
         <dependency>
             <groupId>de.flapdoodle.embed</groupId>
-            <artifactId>de.flapdoodle.embed.mongo.spring30x</artifactId>
+            <artifactId>de.flapdoodle.embed.mongo.spring3x</artifactId>
             <scope>test</scope>
         </dependency>
         {%- endif -%} 
@@ -141,37 +126,12 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
-            <!-- most of the plugin configurations are inherited from the parent pom -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>io.github.git-commit-id</groupId>
-                <artifactId>git-commit-id-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-            </plugin>
             {%- if cookiecutter.api_type == 'graphql' -%} 
             <plugin>
                 <groupId>io.github.deweyjose</groupId>
                 <artifactId>graphqlcodegen-maven-plugin</artifactId>
             </plugin>
             {%- endif -%} 
-            <plugin>
-                <groupId>com.diffplug.spotless</groupId>
-                <artifactId>spotless-maven-plugin</artifactId>
-            </plugin>
             {%- if 'archunit' in cookiecutter.qa_tools -%} 
             <plugin>
                 <groupId>com.societegenerale.commons</groupId>
@@ -179,10 +139,12 @@
             </plugin>
             {%- endif -%} 
             {%- if 'jqassistant' in cookiecutter.qa_tools -%} 
+            <!-- disable temporarily to speed up test run
             <plugin>
                 <groupId>com.buschmais.jqassistant</groupId>
                 <artifactId>jqassistant-maven-plugin</artifactId>
             </plugin>
+            -->
             {%- endif -%} 
         </plugins>
     </build>

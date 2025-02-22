@@ -80,6 +80,14 @@ management:
       probes:
         enabled: true
 
+{% if cookiecutter.database_type == 'mongodb' -%}
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 6.0.5
+{% endif -%}
+
 ---
 spring:
   config:
@@ -100,8 +108,11 @@ spring:
   {% endif %}
 
 {% if cookiecutter.database_type == 'mongodb' -%}
-de.flapdoodle.mongodb.embedded:
-  version: "6.0.5"
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 6.0.5
 {% endif -%}
 
 logging:
