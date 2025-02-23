@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.vino9.vino</groupId>
         <artifactId>vino-svc-parent</artifactId>
-        <version>1.2.0</version>
+        <version>1.2.1</version>
         <relativePath />
     </parent>
 
@@ -140,7 +140,7 @@
             </plugin>
             {%- endif -%}
             {%- if 'jqassistant' in cookiecutter.qa_tools -%}
-                        <!-- disable temporarily to speed up test run
+                                    <!-- disable temporarily to speed up test run
             <plugin>
                 <groupId>com.buschmais.jqassistant</groupId>
                 <artifactId>jqassistant-maven-plugin</artifactId>
